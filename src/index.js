@@ -35,7 +35,6 @@ const filterTodos = (term) => {
 
 search.addEventListener('keyup', () => {
 const term = search.value.trim();
-
 filterTodos(term);
 });
 
