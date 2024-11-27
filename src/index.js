@@ -19,11 +19,25 @@ initializeApp(firebaseConfig);
 const db = getFirestore();
 
 const colRef = collection(db, 'todolists');
+const list = document.querySelector('.todos');
+
+const renderTodos = (todos) => {
+  todos.forEach(({id, data}) => {
+    list.innerHTML = "";
+    const html = `<li class="list-group-item d-flex justify-content-between align-text-center data-id="${id}">
+                <span>${data.todo}</span>
+                <i class="far fa-trash-alt delete"></i>
+            </li>
+            `;
+            list.innerHTML += html;
+  })
+}
 
 onSnapshot(colRef, (snapshot) => {
   const todos = snapshot.docs.map((doc) => ({
     id: doc.id,
     data: doc.data()
-  }))
+  }));
+  renderTodos(todos);
 });
 
