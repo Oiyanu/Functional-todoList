@@ -1,0 +1,13 @@
+body{
+    background: #391863;
+}
+.container{
+    max-width: 400px;
+}
+.search{
+    border: black;
+    border-radius: 10px;
+}
+li{
+    cursor: pointer;
+}
