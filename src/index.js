@@ -23,21 +23,37 @@ const list = document.querySelector('.todos');
 
 const renderTodos = (todos) => {
   todos.forEach(({id, data}) => {
-    list.innerHTML = "";
+    list.innerHTML += "";
     const html = `<li class="list-group-item d-flex justify-content-between align-text-center data-id="${id}">
                 <span>${data.todo}</span>
                 <i class="far fa-trash-alt delete"></i>
             </li>
             `;
-            list.innerHTML += html;
-  })
-}
+    list.innerHTML += html;
+  });
+};
 
 onSnapshot(colRef, (snapshot) => {
   const todos = snapshot.docs.map((doc) => ({
     id: doc.id,
     data: doc.data()
   }));
+  console.log(todos);
   renderTodos(todos);
+});
+
+const addTodo = document.querySelector('.add');
+
+addTodo.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const term = addTodo.add.value.trim();
+
+  if(term){
+    addDoc(colRef, { todo: term })
+    .then(() => {
+      addTodo.reset();
+    }).catch(err => console.log(err.message));
+    
+  }
 });
 
