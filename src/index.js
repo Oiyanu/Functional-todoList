@@ -22,9 +22,9 @@ const colRef = collection(db, 'todolists');
 const list = document.querySelector('.todos');
 
 const renderTodos = (todos) => {
+  list.innerHTML = "";
   todos.forEach(({id, data}) => {
-    list.innerHTML += "";
-    const html = `<li class="list-group-item d-flex justify-content-between align-text-center data-id="${id}">
+    const html = `<li class="list-group-item d-flex justify-content-between align-text-center" data-id="${id}">
                 <span>${data.todo}</span>
                 <i class="far fa-trash-alt delete"></i>
             </li>
@@ -53,7 +53,17 @@ addTodo.addEventListener('submit', (e) => {
     .then(() => {
       addTodo.reset();
     }).catch(err => console.log(err.message));
-    
   }
+});
+
+list.addEventListener('click', (e) => {
+if(e.target.classList.contains('delete')){
+  const li = e.target.closest('li');
+  const id = li.getAttribute('data-id');
+  if(id){
+    const docRef = doc(db, 'todolists', id);
+    deleteDoc(docRef);
+  }
+}
 });
 
