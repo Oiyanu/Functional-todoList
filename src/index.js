@@ -18,3 +18,12 @@ initializeApp(firebaseConfig);
 
 const db = getFirestore();
 
+const colRef = collection(db, 'todolists');
+
+onSnapshot(colRef, (snapshot) => {
+  const todos = snapshot.docs.map((doc) => ({
+    id: doc.id,
+    data: doc.data()
+  }))
+});
+
