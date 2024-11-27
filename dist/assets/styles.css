@@ -11,3 +11,6 @@ body{
 li{
     cursor: pointer;
 }
+.filtered{
+    display: none !important;
+}

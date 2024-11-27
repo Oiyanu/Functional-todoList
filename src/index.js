@@ -20,6 +20,25 @@ const db = getFirestore();
 
 const colRef = collection(db, 'todolists');
 const list = document.querySelector('.todos');
+const search = document.querySelector('.search input');
+
+
+const filterTodos = (term) => {
+  Array.from(list.children)
+  .filter((todo) => !todo.textContent.toLowerCase().includes(term))
+  .forEach((todo) => todo.classList.add('filtered'));
+
+  Array.from(list.children)
+  .filter((todo) => todo.textContent.toLowerCase().includes(term))
+  .forEach((todo) => todo.classList.remove('filtered'));
+};
+
+search.addEventListener('keyup', () => {
+const term = search.value.trim();
+
+filterTodos(term);
+});
+
 
 const renderTodos = (todos) => {
   list.innerHTML = "";
@@ -38,7 +57,6 @@ onSnapshot(colRef, (snapshot) => {
     id: doc.id,
     data: doc.data()
   }));
-  console.log(todos);
   renderTodos(todos);
 });
 
@@ -66,4 +84,3 @@ if(e.target.classList.contains('delete')){
   }
 }
 });
-
